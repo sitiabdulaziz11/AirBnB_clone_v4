@@ -9,3 +9,21 @@ header .logo {
     left: 20px;
     height: 100%;
 }
+#api_status {
+    /* text-align: right; */
+    height: 40px;
+    width: 40px;
+    background-color: #cccccc;
+    border-radius: 50%;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%); /* to make vertically centers the circle inside the parent container.*/
+}
+#api_status.available {
+    Background-color: #ff545f;
+}
+
+header {
+    position: relative; /* Allow absolute positioning inside the header */
+}
