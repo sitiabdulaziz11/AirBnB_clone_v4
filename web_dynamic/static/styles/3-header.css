@@ -21,6 +21,7 @@ header .logo {
     transform: translateY(-50%); /* to make vertically centers the circle inside the parent container.*/
 }
 #api_status.available {
+/* .available { */
     Background-color: #ff545f;
 }
 

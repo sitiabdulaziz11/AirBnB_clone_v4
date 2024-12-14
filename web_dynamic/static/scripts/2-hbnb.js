@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    const apiUrl = "http://0.0.0.0:5001/api/v1/status/";
+    const apiUrl = "http://127.0.0.1:5001/api/v1/status/";
 
     // Check API status
     // $.get('http://0.0.0.0:5001/api/v1/status/', function(data) {
