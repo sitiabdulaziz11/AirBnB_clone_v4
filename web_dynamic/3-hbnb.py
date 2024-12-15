@@ -23,7 +23,7 @@ def close_db(error):
     storage.close()
 
 
-@app.route('/2-hbnb', strict_slashes=False)
+@app.route('/3-hbnb', strict_slashes=False)
 def hbnb():
     """ HBNB is alive! """
     states = storage.all(State).values()
@@ -50,7 +50,3 @@ def hbnb():
 if __name__ == "__main__":
     """ Main Function """
     app.run(host='0.0.0.0', port=5000)
-
-# To get see the out put, we should run with:
-#  HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3 -m web_dynamic.2-hbnb the route
-# HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_PORT=5001 python3 -m api.v1.app the API 
