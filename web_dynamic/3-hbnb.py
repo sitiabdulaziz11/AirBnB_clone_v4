@@ -46,6 +46,49 @@ def hbnb():
                            amenities=amenities,
                            places=places, cache_id=cache_id)
 
+@app.route('/places_search', methods=['POST'], strict_slashes=False)
+def place_search():
+    """Search or retrieve place object based on specific filters passed in the JSON body of the request.
+    """
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify({"error": "Not a JSON"}), 400
+    
+    if not data or not any(data.values()):
+        places = storage.all(Place).value()
+        return jsonify([place.to_dict() for place in places])
+    
+    # Retrieve filters
+    states = data.get("states", [])
+    cities = data.get("cities", [])
+    amenities = data.get("amenities", [])
+    
+    # Get Place objects
+    places = []
+    if states:
+        for state_id in states:
+            state = storage.get(State, state_id)
+            if state:
+                for city in state.cities:
+                    places.extend(city.places)  #  Instead of appending one Place
+                    # object at a time with append(), extend() can add all Place objects in one step.
+    
+    if cities:
+        for city_id in cities:
+            city = storage.get(City, city_id)
+            if city:
+                   places.extend(city.places)
+    
+    # Remove duplicates
+    # places = list(set(places))
+    
+    # Filter by amenities
+    if amenities:
+        places = [place for place in places if all(amenity.id in [a.id for a in place.amenities] for amenity in amenities)]
+    return jsonify([place.to_dict() for place in places])
+
+
 
 if __name__ == "__main__":
     """ Main Function """
