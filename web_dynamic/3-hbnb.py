@@ -9,7 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 
 from os import environ
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from uuid import uuid4
 
 app = Flask(__name__)
@@ -46,7 +46,7 @@ def hbnb():
                            amenities=amenities,
                            places=places, cache_id=cache_id)
 
-@app.route('/places_search', methods=['POST'], strict_slashes=False)
+@app.route('/api/v1/places_search', methods=['POST'], strict_slashes=False)
 def place_search():
     """Search or retrieve place object based on specific filters passed in the JSON body of the request.
     """
