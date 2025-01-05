@@ -1,8 +1,9 @@
 $(document).ready(function(){
+    const apiUrl1 = "http://127.0.0.1:5001/api/v1/status/";
     const apiUrl = "http://127.0.0.1:5001/api/v1/places_search/";
 
     // Check API status
-    $.get(apiUrl, function(data) {
+    $.get(apiUrl1, function(data) {
         if (data.status === 'OK') {
             $('#api_status').addClass('available');
         } else {
@@ -29,33 +30,31 @@ $(document).ready(function(){
             // console.log(`Removed: ${amenityName} (ID: ${amenityId})`);
         }
 
-        // Update the h4 tag with the list of selected amenitie
-        const amenityList = selectedAmenities.map(amenity => amenity.name).join(', ');
-        // $('.Amenities h4').text(amenityList);
-        $('#selected-amenities').text(amenityList);
+        // Extract only the IDs of selected amenities
+const amenityIds = selectedAmenities.map(amenity => amenity.id);
 
-        // Send POST request to the API
-        $.post(apiUrl, JSON.stringify({amenities: selectedAmenities}), function(data) {
-            const places = data;
-            const placesSection = $('.places');
-            placesSection.empty();
+// Send POST request to the API
+$.post(apiUrl, JSON.stringify({ amenities: amenityIds }), function(data) {
+    const places = data;
+    const placesSection = $('.places');
+    placesSection.empty();
 
-            places.forEach(place => {
-                const article = $(`<article>
-                    <div class="title_box">
-                        <h2>${place.name}</h2>
-                        <div class="price_by_night">${place.price_by_night}</div>
-                    </div>
-                    <div class="information">
-                        <div class="max_guest">${place.max_guest} Guests</div>
-                        <div class="number_rooms">${place.number_rooms} Bedrooms</div>
-                        <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
-                    </div>
-                    <div class="description">${place.description}</div>
-                </article>`);
-                placesSection.append(article);
-            });
-        });
-
+    places.forEach(place => {
+        const article = $(`<article>
+            <div class="title_box">
+                <h2>${place.name}</h2>
+                <div class="price_by_night">${place.price_by_night}</div>
+            </div>
+            <div class="information">
+                <div class="max_guest">${place.max_guest} Guests</div>
+                <div class="number_rooms">${place.number_rooms} Bedrooms</div>
+                <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
+            </div>
+            <div class="description">${place.description}</div>
+        </article>`);
+        placesSection.append(article);
     });
+}, 'json');
+    });
+
 });
